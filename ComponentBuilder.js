@@ -1,4 +1,4 @@
-import EventBus from "/EventBus.js";
+import { EventBus } from "./EventBus.js";
 
 // Create global namespaces for modules 
 export var ComponentConfigs = {};
@@ -991,7 +991,6 @@ export var Builder = (function( EventBus ) {
    };
 
     // Polyfill for making sure elements are unique within an array
-
     if( Array.prototype.unique === undefined ) {
 
         Array.prototype.unique = function() {
