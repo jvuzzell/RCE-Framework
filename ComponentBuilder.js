@@ -38,7 +38,8 @@ export var ComponentBuilder = (function( EventBus ) {
                 key : '',                    // Placeholder; created dynamically at the time the component is instantiated
                 componentName : '',             // Placeholder; this the common name of the component determined by the developer manually, is not unique
                 eventBus : [], // Placeholder; this is updated when the the component is registered to eventBus
-                eventListeners : {}
+                eventListeners : {}, 
+                firstRenderFlag : true
             }, 
             inlineTemplateNode : inlineTemplateNode
         };
@@ -220,6 +221,8 @@ export var ComponentBuilder = (function( EventBus ) {
             // 3) Hook afterMount - post processing
             _public.hooks.afterMount( _public.get.state() );
 
+            component.state.firstRenderFlag = false;
+
             // 4) Notify the rest of the eventBus
             _public.dispatch.notifyEventBus( _public.get.state( 'key' ), _public.get.state() );
 
@@ -365,7 +368,6 @@ export var ComponentBuilder = (function( EventBus ) {
         _public.dispatch.createInlineTemplate = function( template, componentKey ) {
           
             var inlineTemplateNode = ComponentBuilder.templateToHTML( template ); 
-            console.log(inlineTemplateNode);
             inlineTemplateNode.setAttribute( 'data-key', componentKey );
 
             component.inlineTemplateNode = inlineTemplateNode; 
