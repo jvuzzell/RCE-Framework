@@ -5,7 +5,7 @@ export var ComponentConfigs = {};
 export var ComponentProps = {};
 
 // Builder
-export var Builder = (function( EventBus ) {
+export var ComponentBuilder = (function( EventBus ) {
 
     var componentStore = {};
 
@@ -363,8 +363,9 @@ export var Builder = (function( EventBus ) {
         }
 
         _public.dispatch.createInlineTemplate = function( template, componentKey ) {
-
-            var inlineTemplateNode = ComponentBuilder.templateToHTML( template ).querySelector( 'div' );
+          
+            var inlineTemplateNode = ComponentBuilder.templateToHTML( template ); 
+            console.log(inlineTemplateNode);
             inlineTemplateNode.setAttribute( 'data-key', componentKey );
 
             component.inlineTemplateNode = inlineTemplateNode; 
@@ -596,7 +597,6 @@ export var Builder = (function( EventBus ) {
     }
 
     var registerComponent = function( componentConfig, manualRegistration = false ) {
-
         var state = componentConfig.state; 
         var newModuleKey = '';
         var componentsCreated = {}; // More than one component can be created at this time because of inline templating
@@ -979,12 +979,14 @@ export var Builder = (function( EventBus ) {
        // If DOMParser is supported, use it
        if (support) {
            const parser = new DOMParser();
-           let doc = parser.parseFromString(str, 'text/html');
-           return doc.body;
+           let doc = parser.parseFromString(str, 'text/html'); 
+           return doc.body.querySelector( '*' );
        }
-   
+
        // Otherwise, fallback to old-school method
-       let dom = document.createElement('div');
+       let htmlTagExp = new RegExp( /<[a-zA-Z](.*?[^?])?>/ );
+       let openingTag = str.match( htmlTagExp )[ 0 ].replace( />|</gi, '' ); 
+       let dom = document.createElement(openingTag);
        dom.innerHTML = str;
        return dom;
    
