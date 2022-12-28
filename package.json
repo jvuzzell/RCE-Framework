@@ -1,7 +1,7 @@
 {
     "name": "cable-js",
     "version": "1.0.0",
-    "description": "State management and event bus for UI components. Use to create single page applications or add reactive components to projects.",
+    "description": "Pulling modern UI together. Offers state management and event bus for UI components. Use to create single page applications or add reactive components to projects.",
     "main": "ComponentBuilder.js",
     "scripts": {
         "test": "jest",
