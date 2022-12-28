@@ -1,15 +1,15 @@
 {
-    "name": "component-builder-and-event-bus",
+    "name": "cable-js",
     "version": "1.0.0",
     "description": "State management and event bus for UI components. Use to create single page applications or add reactive components to projects.",
-    "main": "expandables.js",
+    "main": "ComponentBuilder.js",
     "scripts": {
         "test": "jest",
         "test-watch": "jest --watch"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/jvuzzell/component-builder-and-event-bus.git"
+        "url": "git+https://github.com/jvuzzell/cable-js.git"
     },
     "keywords": [
         "dropdown",
@@ -19,9 +19,9 @@
     "author": "Joshua Uzzell <josh.uzzell@gmail.com> (https://uzzell.cc)",
     "license": "SEE LICENSE IN license.txt",
     "bugs": {
-        "url": "https://github.com/jvuzzell/component-builder-and-event-bus/issues"
+        "url": "https://github.com/jvuzzell/cable-js/issues"
     },
-    "homepage": "https://github.com/jvuzzell/component-builder-and-event-bus#readme",
+    "homepage": "https://github.com/jvuzzell/cable-js#readme",
     "devDependencies": {
         "@babel/plugin-transform-modules-commonjs": "^7.20.7",
         "@testing-library/dom": "^8.17.1",
