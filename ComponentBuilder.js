@@ -360,7 +360,8 @@ export var ComponentBuilder = (function( EventBus ) {
             _public.commit.ref( componentConfig.ref );
             _public.commit.props( componentConfig.props );           
             _public.commit.state( componentConfig.state, triggerRender );
-
+             
+            componentConfig.ref = null; //clean up 
             return _public;
 
         }
