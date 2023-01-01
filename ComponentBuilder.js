@@ -799,13 +799,13 @@ export var ComponentBuilder = (function( EventBus ) {
                 }
             }
         }
-      
+
         // Custom tasks performed after component has been created and reactivity has been established.
         // Otherwise, standard routines will be performed which including notifications to related 
         // eventBuses that the state of a component has been updated, and the component itself will render
-
-        getComponentByKey( componentKey ).hooks.afterCreate( componentConfig.state ); 
-        
+        const newComponent = getComponentByKey( componentKey );      
+        newComponent.hooks.afterCreate( newComponent.get.state() ); 
+  
         return componentKey;
 
     }
