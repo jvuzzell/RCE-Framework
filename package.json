@@ -1,5 +1,5 @@
 {
-    "name": "ui-cable-js",
+    "name": "ui-components-js",
     "version": "1.0.2",
     "description": "Pulling modern UI together. Offers state management and event bus for UI components. Use to create single page applications or add reactive components to projects.",
     "main": "ComponentBuilder.js",
@@ -9,19 +9,21 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/jvuzzell/ui-cable-js.git"
+        "url": "git+https://github.com/jvuzzell/ui-components-js.git"
     },
     "keywords": [
-        "dropdown",
-        "collapse",
-        "expand"
+        "reactive",
+        "components", 
+        "eventbus", 
+        "publisher", 
+        "subscriber"
     ],
     "author": "Joshua Uzzell <josh.uzzell@gmail.com> (https://uzzell.cc)",
     "license": "SEE LICENSE IN license.txt",
     "bugs": {
-        "url": "https://github.com/jvuzzell/ui-cable-js/issues"
+        "url": "https://github.com/jvuzzell/ui-components-js/issues"
     },
-    "homepage": "https://github.com/jvuzzell/ui-cable-js#readme",
+    "homepage": "https://github.com/jvuzzell/ui-components-js#readme",
     "devDependencies": {
         "@babel/plugin-transform-modules-commonjs": "^7.20.7",
         "@testing-library/dom": "^8.17.1",
