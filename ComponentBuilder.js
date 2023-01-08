@@ -302,7 +302,7 @@ export var ComponentBuilder = (function( EventBus ) {
                 var hookKeys = Object.keys( componentConfig.hooks );
                 var keyToUse = ''; // Used to identify/select _public key
 
-                for( var i = 0; i < hookKeys.length; i++ ) {
+                for( let i = 0; i < hookKeys.length; i++ ) {
 
                     switch( hookKeys[ i ] ) {
                         
@@ -452,13 +452,13 @@ export var ComponentBuilder = (function( EventBus ) {
              * @param  {Array}   arr2 The second array
              * @return {Boolean}      If true, both arrays are equal
              */
-            var arraysMatch = function (arr1, arr2) {
+            const arraysMatch = function (arr1, arr2) {
 
                 // Check if the arrays are the same length
                 if (arr1.length !== arr2.length) return false;
 
                 // Check if all items exist and are in the same order
-                for (var i = 0; i < arr1.length; i++) {
+                for (let i = 0; i < arr1.length; i++) {
                     if (arr1[i] !== arr2[i]) return false;
                 }
 
@@ -473,11 +473,11 @@ export var ComponentBuilder = (function( EventBus ) {
              * @param  {*}      item2 The second item
              * @param  {String} key   The key in our object
              */
-            var compare = function (item1, item2, key) {
+            const compare = function (item1, item2, key) {
 
                 // Get the object type
-                var type1 = Object.prototype.toString.call(item1);
-                var type2 = Object.prototype.toString.call(item2);
+                let type1 = Object.prototype.toString.call(item1);
+                let type2 = Object.prototype.toString.call(item2);
 
                 // If type2 is undefined it has been removed
                 if (type2 === '[object Undefined]') {
@@ -493,7 +493,7 @@ export var ComponentBuilder = (function( EventBus ) {
 
                 // If an object, compare recursively
                 if (type1 === '[object Object]') {
-                    var objDiff = _private.compareObjects(item1, item2);
+                    let objDiff = _private.compareObjects(item1, item2);
                     if (Object.keys(objDiff).length > 1) {
                         diffs[key] = objDiff;
                     }
@@ -577,10 +577,10 @@ export var ComponentBuilder = (function( EventBus ) {
     // Plugin Features
     var ensureUniqueKey = function( newKey, existingKeys, componentName ) {
 
-        var needNewKey = false; 
+        let needNewKey = false; 
 
         // TODO: Create a hash table of component instances
-        for( var i = 0; i < existingKeys.length; i++ ) {
+        for( let i = 0; i < existingKeys.length; i++ ) {
 
             if( newKey === existingKeys[ i ] ) { 
                 needNewKey = true;
@@ -600,9 +600,9 @@ export var ComponentBuilder = (function( EventBus ) {
     }
 
     var registerComponent = function( componentConfig, manualRegistration = false ) {
-        var state = componentConfig.state; 
-        var newModuleKey = '';
-        var componentsCreated = {}; // More than one component can be created at this time because of inline templating
+        let state = componentConfig.state; 
+        let newModuleKey = '';
+        let componentsCreated = {}; // More than one component can be created at this time because of inline templating
 
         if( state.componentName === undefined || state.componentName === null ) {
             console.warn( 'EventBus: component instance not registered; state.componentName not specified' );
@@ -614,16 +614,16 @@ export var ComponentBuilder = (function( EventBus ) {
         // If there are inline templates then create an instance of the component with that inline template
         // Otherwise the component will be created as an standalone instance of the component 
 
-        var inlineTemplateSelector = '[data-inline-template="' + componentConfig.state.componentName + '"]';
-        var inlineTemplateNodeList = document.querySelectorAll( inlineTemplateSelector );
+        let inlineTemplateSelector = '[data-inline-template="' + componentConfig.state.componentName + '"]';
+        let inlineTemplateNodeList = document.querySelectorAll( inlineTemplateSelector );
 
         if( inlineTemplateNodeList.length > 0 ) {
           
-            for( var i = 0; i < inlineTemplateNodeList.length; i++ ) {
+            for( let i = 0; i < inlineTemplateNodeList.length; i++ ) {
                 
                 // Make sure that we are not we are not duplicating component registration
                 // TODO: Detect subcomponents
-                var existingModuleInstance = ComponentBuilder.getComponentByKey( inlineTemplateNodeList[ i ].getAttribute( 'data-key' ) );
+                let existingModuleInstance = ComponentBuilder.getComponentByKey( inlineTemplateNodeList[ i ].getAttribute( 'data-key' ) );
               
                 if( !existingModuleInstance ) {
 
@@ -679,7 +679,7 @@ export var ComponentBuilder = (function( EventBus ) {
 
     }
 
-    var setEventListeners = function( componentConfig ) {
+    colet setEventListeners = function( componentConfig ) {
 
         // Add Eventlisteners (Eventlisteners are added to the Window as named functions)
         if(
@@ -690,18 +690,18 @@ export var ComponentBuilder = (function( EventBus ) {
         ) {
 
             // loop through events 
-            var componentEventSeriesKeys = Object.keys( componentConfig.props.eventListeners );
-            var componentKey = componentConfig.state.key;
-            var currentModule = getComponentByKey( componentKey ); 
+            let componentEventSeriesKeys = Object.keys( componentConfig.props.eventListeners );
+            let componentKey = componentConfig.state.key;
+            let currentModule = getComponentByKey( componentKey ); 
 
-            for( var i = 0; i < componentEventSeriesKeys.length; i++ ) {
+            for( let i = 0; i < componentEventSeriesKeys.length; i++ ) {
 
-                var componentEventSeries = componentConfig.props.eventListeners[ componentEventSeriesKeys[ i ] ]; 
+            let componentEventSeries = componentConfig.props.eventListeners[ componentEventSeriesKeys[ i ] ]; 
 
                 // has the event been registered 
-                var individualEvents = Object.keys( componentEventSeries );
+            let individualEvents = Object.keys( componentEventSeries );
             
-                for( var n = 0; n < individualEvents.length; n++ ) {
+                for( let n = 0; n < individualEvents.length; n++ ) {
 
                     // Initialize event
                     componentEventSeries[ individualEvents[ n ] ].eventInit( 
@@ -720,7 +720,7 @@ export var ComponentBuilder = (function( EventBus ) {
 
     }
 
-    var instantiateComponent = function( componentConfig, inlineTemplateNode = null ) {
+    const instantiateComponent = function( componentConfig, inlineTemplateNode = null ) {
 
         // Be sure not to re-register nodes that have already been registered
         const allModules = ComponentBuilder.getAllComponents();
@@ -811,7 +811,7 @@ export var ComponentBuilder = (function( EventBus ) {
 
     }
 
-    var setParentBus = function( componentKey, componentConfig ) {
+    const setParentBus = function( componentKey, componentConfig ) {
 
         for( let i = 0; i < componentConfig.eventBus.length; i++ ) {
             
@@ -828,32 +828,32 @@ export var ComponentBuilder = (function( EventBus ) {
 
     }
 
-    var storeComponent = function( instanceKey, instanceObj ) {
+    const storeComponent = function( instanceKey, instanceObj ) {
 
         componentStore[ instanceKey ] = instanceObj;
 
     }
 
-    var getComponentByKey = function( nameOfInstance = '' ) {
+    const getComponentByKey = function( nameOfInstance = '' ) {
 
         return ( nameOfInstance !== '' && nameOfInstance !== null && nameOfInstance !== undefined ) ? componentStore[ nameOfInstance ] : false;
 
     }
 
-    var getAllComponents = function() {
+    const getAllComponents = function() {
  
         return componentStore;
 
     } 
 
-    var getComponentsByName = function( componentName = '' ) {
+    const getComponentsByName = function( componentName = '' ) {
 
         const componentKeys = Object.keys( getAllComponents() );
         let componentsByModuleName = {};
 
-        for( var i = 0; i < componentKeys.length; i++ ) {
+        for( let i = 0; i < componentKeys.length; i++ ) {
 
-            var currentModule = getComponentByKey( componentKeys[ i ] ); 
+            let currentModule = getComponentByKey( componentKeys[ i ] ); 
 
             if( currentModule.get.state( 'componentName' ) === componentName ) {
  
@@ -867,7 +867,7 @@ export var ComponentBuilder = (function( EventBus ) {
 
     }
 
-    var getComponentByName = function( $name = '' ) {
+    const getComponentByName = function( $name = '' ) {
 
         let componentList = ComponentBuilder.getComponentsByName( $name );
         let componentKeys = Object.keys( componentList );
@@ -875,7 +875,7 @@ export var ComponentBuilder = (function( EventBus ) {
 
     }
 
-    var setEventSubscriptions = function( subscriberKey = '', subscriptionPlan = {} ) {
+    const setEventSubscriptions = function( subscriberKey = '', subscriptionPlan = {} ) {
 
         const eventBusKeys = Object.keys( subscriptionPlan.subscriptions );
 
@@ -925,7 +925,7 @@ export var ComponentBuilder = (function( EventBus ) {
 
     }
 
-    var subscribeToAllEventNotifications = function( componentKey, eventBusId ) {
+    const subscribeToAllEventNotifications = function( componentKey, eventBusId ) {
         
         if( eventBusId === undefined ) {
             console.warn( 'ComponentBuilder Plugin, subscribeToAllEventNotifications: eventBusId is undefined. Subscriptions failed.' );
@@ -938,11 +938,11 @@ export var ComponentBuilder = (function( EventBus ) {
         if( subscriptionApp !== undefined && subscriptionApp.hasOwnProperty( 'get' ) ) {
 
             // Retrieve all components from that eventBus 
-            var componentsOfSubscriptionApp = subscriptionApp.get( 'getAllComponents' ); 
+            let componentsOfSubscriptionApp = subscriptionApp.get( 'getAllComponents' ); 
 
             // Subscribe to each component
-            var allSubscriptionModuleKeys = Object.keys( componentsOfSubscriptionApp );
-            var indexOfthisModuleKey = allSubscriptionModuleKeys.indexOf( componentKey );
+            let allSubscriptionModuleKeys = Object.keys( componentsOfSubscriptionApp );
+            let indexOfthisModuleKey = allSubscriptionModuleKeys.indexOf( componentKey );
 
             // We do not want to subscribe this component to itself
             allSubscriptionModuleKeys.splice( indexOfthisModuleKey, 1 ); 
@@ -966,7 +966,7 @@ export var ComponentBuilder = (function( EventBus ) {
     * @param  {String} str The template string
     * @return {Node}       The template HTML
     */
-   var templateToHTML = function (str) {
+    templateToHTML = function (str) {
 
         let support = (function () {
             if (!window.DOMParser) return false;
@@ -1010,7 +1010,7 @@ export var ComponentBuilder = (function( EventBus ) {
             return a;
         };
 
-    }
+    } 
 
     return {
         construct                        : builder,
