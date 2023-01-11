@@ -19,9 +19,9 @@ export var ComponentBuilder = (function( EventBus ) {
             dispatch : {}, 
             hooks    : {
                 beforeCreate : function( state ) { console.error( '1. This will not run unless defined during component registration', state ); },
-                beforeUpdate : function( state ) { console.log( '2. Module will update: ' + state.key ); }, 
-                onUpdate     : function( state ) { console.log( '3. Module updating: ' + state.key ); },
-                afterUpdate  : function( state ) { console.log( '4.  Module updated: ' + state.key );  }, 
+                beforeUpdate : function( deltaState, state ) { console.log( '2. Module will update: ' + this.parent().get.state( 'key' ), deltaState ); }, 
+                onUpdate     : function( deltaState, state ) { console.log( '3. Module updating: ' + this.parent().get.state( 'key' ), deltaState ); },
+                afterUpdate  : function( deltaState, state ) { console.log( '4.  Module updated: ' + this.parent().get.state( 'key' ), deltaState );  }, 
                 afterCreate  : function( state ) { console.log( '5. Module was created: ' + state.key ) },
                 beforeMount  : function( state ) { console.log( '6. Module will mount: ' + state.key ); }, 
                 onMount      : function( state ) { console.log( '7. Module mounting: ' + state.key ); },                
@@ -171,7 +171,7 @@ export var ComponentBuilder = (function( EventBus ) {
 
                 // 3) Re-render existing node
                 if( !triggerRender ) return; 
-                _public.dispatch.render();
+                _public.dispatch.render( newState );
                 
                 // 4) Notify observers
                 if( !triggerNotification ) return;
@@ -228,16 +228,16 @@ export var ComponentBuilder = (function( EventBus ) {
 
         }
 
-        _public.dispatch.render = function() {
+        _public.dispatch.render = function( deltaState = {} ) {
 
             // 1) Hook beforeUpdate- compile template
-            _public.hooks.beforeUpdate( _public.get.state() );
+            _public.hooks.beforeUpdate( deltaState );
 
             // 2) Hook onUpdate - add template to DOM
-            _public.hooks.onUpdate( _public.get.state() );
+            _public.hooks.onUpdate( deltaState );
 
             // 3) Hook afterUpdate - post processing
-            _public.hooks.afterUpdate( _public.get.state() );
+            _public.hooks.afterUpdate( deltaState );
 
         }
 
@@ -679,7 +679,7 @@ export var ComponentBuilder = (function( EventBus ) {
 
     }
 
-    colet setEventListeners = function( componentConfig ) {
+    const setEventListeners = function( componentConfig ) {
 
         // Add Eventlisteners (Eventlisteners are added to the Window as named functions)
         if(
@@ -966,7 +966,7 @@ export var ComponentBuilder = (function( EventBus ) {
     * @param  {String} str The template string
     * @return {Node}       The template HTML
     */
-    templateToHTML = function (str) {
+    const templateToHTML = function (str) {
 
         let support = (function () {
             if (!window.DOMParser) return false;
