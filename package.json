@@ -1,6 +1,6 @@
 {
     "name": "ui-component-eventbus-js",
-    "version": "1.0.2",
+    "version": "1.1.0",
     "description": "Offers state management and event bus for UI components. Use to create single page applications or add reactive components to projects.",
     "main": "ComponentBuilder.js",
     "scripts": {
@@ -13,9 +13,9 @@
     },
     "keywords": [
         "reactive",
-        "components", 
-        "eventbus", 
-        "publisher", 
+        "components",
+        "eventbus",
+        "publisher",
         "subscriber"
     ],
     "author": "Joshua Uzzell <josh.uzzell@gmail.com> (https://uzzell.cc)",
