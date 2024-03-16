@@ -1,16 +1,18 @@
 import { EventBus } from "./EventBus.js";
 
 // Create global namespaces for modules 
-export var ComponentConfigs = {};
+export var ComponentConfigs = {}; // aka componentConfig
 export var ComponentProps = {};
 
 // Builder
-export var ComponentBuilder = (function( EventBus ) {
+export var Factory = (function( EventBus ) {
 
     var componentStore = {};
 
     // Module Features
     var builder = function( componentConfig = {}, inlineTemplateNode ) {
+
+        var debug = (componentConfig.debug) ? componentConfig.debug : false;
 
         // Public Methods
         var _public = {
@@ -18,14 +20,14 @@ export var ComponentBuilder = (function( EventBus ) {
             commit   : {},
             dispatch : {}, 
             hooks    : {
-                beforeCreate : function( state ) { console.error( '1. This will not run unless defined during component registration', state ); },
-                beforeUpdate : function( deltaState, state ) { console.log( '2. Module will update: ' + this.parent().get.state( 'key' ), deltaState ); }, 
-                onUpdate     : function( deltaState, state ) { console.log( '3. Module updating: ' + this.parent().get.state( 'key' ), deltaState ); },
-                afterUpdate  : function( deltaState, state ) { console.log( '4.  Module updated: ' + this.parent().get.state( 'key' ), deltaState );  }, 
-                afterCreate  : function( state ) { console.log( '5. Module was created: ' + state.key ) },
-                beforeMount  : function( state ) { console.log( '6. Module will mount: ' + state.key ); }, 
-                onMount      : function( state ) { console.log( '7. Module mounting: ' + state.key ); },                
-                afterMount   : function( state ) { console.log( '8. Module has mounted: ' + state.key ); }
+                beforeCreate : function( state ) { if(!debug) {return}; console.info( '1. This will not run unless defined during component registration', state ); },
+                beforeUpdate : function( delta ) { if(!debug) {return}; console.log( '2. Module will update: ' + this.parent().get.state( 'key' ), delta ); }, 
+                onUpdate     : function( delta ) { if(!debug) {return}; console.log( '3. Module updating: ' + this.parent().get.state( 'key' ), delta ); },
+                afterUpdate  : function( delta ) { if(!debug) {return}; console.log( '4. Module updated: ' + this.parent().get.state( 'key' ), delta );  }, 
+                afterCreate  : function( state ) { if(!debug) {return}; console.log( '5. Module was created: ' + state.key ) },
+                beforeMount  : function( state ) { if(!debug) {return}; console.log( '6. Module will mount: ' + state.key ); }, 
+                onMount      : function( state ) { if(!debug) {return}; console.log( '7. Module mounting: ' + state.key ); },                
+                afterMount   : function( state ) { if(!debug) {return}; console.log( '8. Module has mounted: ' + state.key ); }
             }
 
         };
@@ -167,7 +169,7 @@ export var ComponentBuilder = (function( EventBus ) {
 
                 }
 
-                console.log( 'Change in state: ', newState );
+                if (debug) { console.log( 'Change in state: ', newState ) };
 
                 // 3) Re-render existing node
                 if( !triggerRender ) return; 
@@ -228,16 +230,16 @@ export var ComponentBuilder = (function( EventBus ) {
 
         }
 
-        _public.dispatch.render = function( deltaState = {} ) {
+        _public.dispatch.render = function( delta = {} ) {
 
             // 1) Hook beforeUpdate- compile template
-            _public.hooks.beforeUpdate( deltaState );
+            _public.hooks.beforeUpdate( delta );
 
             // 2) Hook onUpdate - add template to DOM
-            _public.hooks.onUpdate( deltaState );
+            _public.hooks.onUpdate( delta );
 
             // 3) Hook afterUpdate - post processing
-            _public.hooks.afterUpdate( deltaState );
+            _public.hooks.afterUpdate( delta );
 
         }
 
@@ -368,7 +370,7 @@ export var ComponentBuilder = (function( EventBus ) {
 
         _public.dispatch.createInlineTemplate = function( template, componentKey ) {
           
-            var inlineTemplateNode = ComponentBuilder.templateToHTML( template ); 
+            var inlineTemplateNode = Factory.templateToHTML( template ); 
             inlineTemplateNode.setAttribute( 'data-key', componentKey );
 
             component.inlineTemplateNode = inlineTemplateNode; 
@@ -623,7 +625,7 @@ export var ComponentBuilder = (function( EventBus ) {
                 
                 // Make sure that we are not we are not duplicating component registration
                 // TODO: Detect subcomponents
-                let existingModuleInstance = ComponentBuilder.getComponentByKey( inlineTemplateNodeList[ i ].getAttribute( 'data-key' ) );
+                let existingModuleInstance = Factory.getComponentByKey( inlineTemplateNodeList[ i ].getAttribute( 'data-key' ) );
               
                 if( !existingModuleInstance ) {
 
@@ -723,7 +725,7 @@ export var ComponentBuilder = (function( EventBus ) {
     const instantiateComponent = function( componentConfig, inlineTemplateNode = null ) {
 
         // Be sure not to re-register nodes that have already been registered
-        const allModules = ComponentBuilder.getAllComponents();
+        const allModules = Factory.getAllComponents();
         const componentState = componentConfig.state;
         let componentKey = '';
         let beforeCreateExists = false; 
@@ -762,10 +764,10 @@ export var ComponentBuilder = (function( EventBus ) {
             componentConfig.hooks.beforeCreate( componentConfig.state, inlineTemplateNode ); 
         }
 
-        // Store component in ComponentBuilder
+        // Store component in Factory
         storeComponent(
             componentKey, 
-            new ComponentBuilder.construct( componentConfig, inlineTemplateNode )
+            new Factory.construct( componentConfig, inlineTemplateNode )
         );
 
         // Register component with parent eventBuses
@@ -869,7 +871,7 @@ export var ComponentBuilder = (function( EventBus ) {
 
     const getComponentByName = function( $name = '' ) {
 
-        let componentList = ComponentBuilder.getComponentsByName( $name );
+        let componentList = Factory.getComponentsByName( $name );
         let componentKeys = Object.keys( componentList );
         return componentList[ componentKeys[ 0 ] ];
 
@@ -888,7 +890,7 @@ export var ComponentBuilder = (function( EventBus ) {
             // is registered to the eventBus first 
             if( !subscriptionApp.get( 'getComponent', { 'componentKey' : subscriberKey } ) ) {
             
-                ComponentBuilder.setParentBus( subscriberKey, {
+                Factory.setParentBus( subscriberKey, {
                     eventBus : [ eventBusKeys[ x ] ]
                 });
 
@@ -928,7 +930,7 @@ export var ComponentBuilder = (function( EventBus ) {
     const subscribeToAllEventNotifications = function( componentKey, eventBusId ) {
         
         if( eventBusId === undefined ) {
-            console.warn( 'ComponentBuilder Plugin, subscribeToAllEventNotifications: eventBusId is undefined. Subscriptions failed.' );
+            console.warn( 'Factory Plugin, subscribeToAllEventNotifications: eventBusId is undefined. Subscriptions failed.' );
             return false;
         }
 
@@ -947,7 +949,7 @@ export var ComponentBuilder = (function( EventBus ) {
             // We do not want to subscribe this component to itself
             allSubscriptionModuleKeys.splice( indexOfthisModuleKey, 1 ); 
 
-            ComponentBuilder.setEventSubscriptions( componentKey, {
+            Factory.setEventSubscriptions( componentKey, {
                 'subscriptions': {
                     [eventBusId] : allSubscriptionModuleKeys
                 },

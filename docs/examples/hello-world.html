@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example - Component & Event Bus</title>
+</head>
+<body>
+    <div id="app"></div> 
+    <script type="module">
+        import { EventBus, GlobalComponentEvents } from '/component-builder-and-event-bus/EventBus.js';  
+        import { Factory, ComponentConfigs, ComponentProps } from '/component-builder-and-event-bus/Factory.js'; 
+
+        (function(
+            Factory,
+            ComponentConfigs
+        ){
+            // State of individual modules
+            var initialState = {
+                componentName : 'exampleComponent', 
+                heading : 'Hello World'
+            };
+
+            // Return registered module (object) to developer
+            ComponentConfigs.exampleComponent = {
+
+                eventBus : [ 'GlobalComponentEvents' ],
+                state : initialState, 
+                props : {
+                    eventListeners : {
+                        updateHeading : {
+                            onChangeFormInput : {
+                                eventInit : ( moduleKey, module ) => {
+                                    let inlineTemplateNode = module.get.inlineTemplateNode(); 
+                                    inlineTemplateNode.querySelector( '[data-update-heading]' ).addEventListener( 'keyup', function(event){
+                                        module.dispatch.commitHeading( event.target.value );
+                                    });
+                                }
+                            }
+                        }
+                    }
+                },
+                hooks : {
+
+                    onMount : function( state ) { this.parent().dispatch.insertTemplate( '#app', 'append' ); }, 
+                    onUpdate : function( deltaState ) {    
+                        if( !this.parent().get.state( 'firstRenderFlag' ) ) { 
+                            let key = this.parent().get.state( 'key' );
+                            this.parent().dispatch.updateHeading( document.querySelector( `[data-key="${key}"]` ) );
+                        }
+                    }
+
+                },  
+                dispatch : {
+
+                    /**
+                     * getTemplateNode 
+                     */ 
+                    getTemplateNode : function() {
+
+                        return this.createInlineTemplate( 
+                            ComponentConfigs[ this.parent().get.state( 'componentName' ) ][ 'template' ], 
+                            this.parent().get.state( 'key' )
+                        );
+
+                    }, 
+
+                    /**
+                     * appendTemplate 
+                     * @param selector (string)    query selector
+                     * @param insertType (string)  values append or prepend
+                     */
+                    insertTemplate : function( selector, insertType = 'append' ) {
+
+                        let templateNode = this.getTemplateNode();
+                        let documentNode = document.querySelector( selector );
+                        this.updateHeading( templateNode );
+
+                        switch( insertType ) {
+                            case 'append' :  
+                                documentNode.appendChild( templateNode );                                
+                                break; 
+                            case 'prepend' : 
+                                documentNode.prependChild( templateNode );
+                                break;
+                            default : 
+                                documentNode.appendChild( templateNode );
+                                break;
+                        }
+
+                    }, 
+                    
+                    /**
+                     * commitHeading
+                     * @param inputValue (string)
+                     */
+                    commitHeading : function( inputValue ) {
+                        this.parent().commit.state({ 'heading' : inputValue });
+                    },
+
+                    /**
+                     * updateHeading
+                     * @param templateNode (node)
+                     */
+                    updateHeading : function( templateNode ) { 
+                        templateNode.querySelector( '[data-heading]' ).innerHTML = this.parent().get.state( 'heading' );
+                    },
+
+                },
+                template : `
+                    <div data-ref="ssr">
+                        <h1 data-heading></h1>
+                        <form>
+                            <input data-update-heading type="text"/>
+                        </form>
+                    </div>
+                `
+            }
+
+            Factory.registerComponent( ComponentConfigs.exampleComponent );
+
+        })(
+            Factory,
+            ComponentConfigs
+        );
+
+    </script>
+</body>
+</html>

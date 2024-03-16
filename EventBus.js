@@ -1,4 +1,4 @@
-export var EventBus = (function() {
+export var EventBus = (function(debug = false) {
 
     var instanceStore = {};
 
@@ -36,7 +36,7 @@ export var EventBus = (function() {
             let subscriberComponent = undefined;
             let busId = get( 'getBusId' );
 
-            console.warn( 'dispatch notification: ', busId, noticeParams.notifierKey, subscriberNames );
+            if(debug) { console.warn( 'dispatch notification: ', busId, noticeParams.notifierKey, subscriberNames ) };
    
             if( subscriberNames !== undefined ) {
                   
@@ -47,7 +47,7 @@ export var EventBus = (function() {
                     if( subscriberComponent !== undefined && subscriberComponent !== false ) {
                         subscriberComponent.dispatch.update( noticeParams.notifierKey, noticeParams.notifierStateDelta, busId );
                     } else {
-                        console.warn( 'EventBus plugin; EventBus ID: "' + busId + '" - unable to retrieve component from component store. Expected component key: "' + subscriberNames[ i ] + '"' );
+                        if(debug) { console.warn( 'EventBus plugin; EventBus ID: "' + busId + '" - unable to retrieve component from component store. Expected component key: "' + subscriberNames[ i ] + '"' ) };
                     }
     
                 }
