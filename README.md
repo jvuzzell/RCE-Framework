@@ -124,4 +124,4 @@ Check out the examples directory for sample applications and use cases to get st
 
 ---
 License
-Component Builder is MIT licensed.
+Component Builder is GNU GENERAL PUBLIC LICENSE licensed.
