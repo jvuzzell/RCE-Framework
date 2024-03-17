@@ -743,32 +743,40 @@ export var Factory = (function( EventBus ) {
             typeof( componentConfig.props.eventListeners ) === "object" 
         ) {
 
-            // loop through events 
-            let componentEventSeriesKeys = Object.keys( componentConfig.props.eventListeners );
+            let eventConfigs = componentConfig.props.eventListeners; 
+            let configKeys = Object.keys( eventConfigs );
             let componentKey = componentConfig.state.key;
-            let currentModule = getComponentByKey( componentKey ); 
+            let component = getComponentByKey( componentKey ); 
+        
+            for(let i = 0; i < configKeys.length; i++) {
 
-            for( let i = 0; i < componentEventSeriesKeys.length; i++ ) {
+                let eventConfig = eventConfigs[ configKeys[i] ];
+                let node = component.get.inlineTemplateNode(); 
+                
+                if (node === null) return false;
 
-            let componentEventSeries = componentConfig.props.eventListeners[ componentEventSeriesKeys[ i ] ]; 
-
-                // has the event been registered 
-            let individualEvents = Object.keys( componentEventSeries );
-            
-                for( let n = 0; n < individualEvents.length; n++ ) {
-
-                    // Initialize event
-                    componentEventSeries[ individualEvents[ n ] ].eventInit( 
-                        componentKey, 
-                        currentModule
-                    );
-
+                if( eventConfig.selector === 'self' || eventConfig.selector === '' ||  eventConfig.selector === undefined ) {
+                    try {
+                        node.addEventListener( eventConfig.listener, (e) => { 
+                            eventConfig.callback(e, component, componentKey ) 
+                        });
+                    } catch( error ) {
+                        console.error( "Not a valid event listener: " + eventConfig.listener )
+                    }
+                } else {
+                    try {
+                        node.querySelector(eventConfig.selector).addEventListener( eventConfig.listener, (e) => { 
+                            eventConfig.callback(e, component, componentKey ) 
+                        });
+                    } catch( error ) {
+                        console.error( error );
+                    }
                 }
 
             }
 
             let triggerRender = false; 
-            currentModule.commit.state( { eventListenersExist : true }, triggerRender );
+            component.commit.state( { eventListenersExist : true }, triggerRender );
 
         }
 
