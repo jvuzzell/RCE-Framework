@@ -43,7 +43,8 @@ export var Factory = (function( EventBus ) {
                 eventListeners : {}, 
                 firstRenderFlag : true
             }, 
-            inlineTemplateNode : inlineTemplateNode
+            inlineTemplateNode : inlineTemplateNode, 
+            template : (componentConfig.template) ? componentConfig.template : null
         };
 
         var _private = {};
@@ -145,6 +146,12 @@ export var Factory = (function( EventBus ) {
         _public.get.inlineTemplateNode = function() {
 
             return component.inlineTemplateNode;
+
+        }
+
+        _public.get.templateString = function() {
+
+            return component.template;
 
         }
 
