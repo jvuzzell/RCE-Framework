@@ -14,9 +14,8 @@
             <input type="text" data-input/>
         </form>
     </div>
-    
+
     <script type="module">
-        import { EventBus, GlobalComponentEvents } from '/component-builder-and-event-bus/EventBus.js';  
         import { Factory, ComponentConfigs, ComponentProps } from '/component-builder-and-event-bus/Factory.js'; 
 
         (function(
@@ -29,29 +28,25 @@
                 heading : 'Hello World'
             };
 
+            // Return registered module (object) to developer
             ComponentConfigs.exampleComponent = {
 
                 eventBus : [ 'GlobalComponentEvents' ],
                 state : initialState, 
                 props : {
                     eventListeners : {
-                        updateHeading : {
-                            onChangeFormInput : {
-                                eventInit : ( moduleKey, module ) => {
-                                    let inlineTemplateNode = module.get.inlineTemplateNode();  
-                                    if(inlineTemplateNode) {
-                                        inlineTemplateNode.querySelector( '[data-input]' ).addEventListener( 'keyup', function(event){
-                                            module.dispatch.commitHeading( event.target.value );
-                                        });
-                                    }
-                                }
+                        onChangeFormInput : {
+                            listener : 'keyup',
+                            selector : '[data-input]', 
+                            callback : ( event, component, componentKey ) => {
+                                component.dispatch.commitHeading( event.target.value );
                             }
-                        }
+                        }, 
                     }
                 },
                 hooks : {
 
-                    onMount : function( state ) { 
+                    onMount : function( state ) {
                         this.component().dispatch.updateHeading( state.heading);
                     }, 
 
@@ -65,7 +60,7 @@
                     commitHeading : function( inputValue ) {
                         this.component().commit.state({ 'heading' : inputValue });
                     },
-                    
+
                     updateHeading : function( heading ) { 
                         let node = this.component().get.inlineTemplateNode();
                         node.querySelector('[data-heading]').innerText = heading;
