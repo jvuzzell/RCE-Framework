@@ -225,6 +225,21 @@ export var Factory = (function( EventBus ) {
 
         }
 
+        _public.dispatch.insertTemplate = function( selector, insertType = 'append' ) {
+
+            let templateNode = _public.get.inlineTemplateNode(); 
+
+            if(templateNode) {
+                let documentNode = document.querySelector( selector );
+
+                if(insertType === 'append') { 
+                    documentNode.appendChild( templateNode );   
+                } else { 
+                    documentNode.prependChild( templateNode );
+                }
+            }
+        }, 
+
         _public.dispatch.mount = function() {
 
             // 1) Hook beforeMount - compile template
