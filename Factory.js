@@ -21,9 +21,9 @@ export var Factory = (function( EventBus ) {
             dispatch : {}, 
             hooks    : {
                 beforeCreate : function( state ) { if(!debug) {return}; console.info( '1. This will not run unless defined during component registration', state ); },
-                beforeUpdate : function( delta ) { if(!debug) {return}; console.log( '2. Module will update: ' + this.parent().get.state( 'key' ), delta ); }, 
-                onUpdate     : function( delta ) { if(!debug) {return}; console.log( '3. Module updating: ' + this.parent().get.state( 'key' ), delta ); },
-                afterUpdate  : function( delta ) { if(!debug) {return}; console.log( '4. Module updated: ' + this.parent().get.state( 'key' ), delta );  }, 
+                beforeUpdate : function( delta ) { if(!debug) {return}; console.log( '2. Module will update: ' + this.component().get.state( 'key' ), delta ); }, 
+                onUpdate     : function( delta ) { if(!debug) {return}; console.log( '3. Module updating: ' + this.component().get.state( 'key' ), delta ); },
+                afterUpdate  : function( delta ) { if(!debug) {return}; console.log( '4. Module updated: ' + this.component().get.state( 'key' ), delta );  }, 
                 afterCreate  : function( state ) { if(!debug) {return}; console.log( '5. Module was created: ' + state.key ) },
                 beforeMount  : function( state ) { if(!debug) {return}; console.log( '6. Module will mount: ' + state.key ); }, 
                 onMount      : function( state ) { if(!debug) {return}; console.log( '7. Module mounting: ' + state.key ); },                
@@ -433,7 +433,7 @@ export var Factory = (function( EventBus ) {
 
         // Grant access to all _public methods within each of the children of the _public class
 
-        _public.get.parent = function() {
+        _public.get.component = function() {
 
             return {
                 commit   : _public.commit, 
@@ -443,7 +443,7 @@ export var Factory = (function( EventBus ) {
 
         };
 
-        _public.dispatch.parent = function() {
+        _public.dispatch.component = function() {
 
             return {
                 get    : _public.get, 
@@ -453,7 +453,7 @@ export var Factory = (function( EventBus ) {
 
         };
 
-        _public.commit.parent = function() {
+        _public.commit.component = function() {
 
             return {
                 get      : _public.get, 
@@ -463,7 +463,7 @@ export var Factory = (function( EventBus ) {
 
         };
 
-        _public.hooks.parent = function() {
+        _public.hooks.component = function() {
 
             return {
                 get      : _public.get,  
