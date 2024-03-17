@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Example - Component & Event Bus</title>
+    <title>Example #1 - Component & Event Bus</title>
 </head>
 <body>
     <div id="app"></div> 
@@ -46,33 +46,24 @@
                 hooks : {
 
                     onMount : function( state ) { 
-                        this.component().dispatch.insertTemplate( '#app', 'append' ); 
-                        this.component().dispatch.updateHeading();
+                        this.component().dispatch.insertTemplate( '#app' ); 
+                        this.component().dispatch.updateHeading( state.heading);
                     }, 
-                    onUpdate : function( delta ) {    
-                        if( !this.component().get.state( 'firstRenderFlag' ) ) { 
-                            let key = this.component().get.state( 'key' );
-                            this.component().dispatch.updateHeading( document.querySelector( `[data-key="${key}"]` ) );
-                        }
+
+                    onUpdate : function( delta ) { 
+                        this.component().dispatch.updateHeading( delta.heading);
                     }
 
                 },  
                 dispatch : {
                     
-                    /**
-                     * commitHeading
-                     * @param inputValue (string)
-                     */
                     commitHeading : function( inputValue ) {
                         this.component().commit.state({ 'heading' : inputValue });
                     },
 
-                    /**
-                     * updateHeading
-                     */
-                    updateHeading : function() { 
+                    updateHeading : function( heading ) { 
                         let node = this.component().get.inlineTemplateNode();
-                        node.querySelector( '[data-heading]' ).innerHTML = this.component().get.state( 'heading' );
+                        node.querySelector('[data-heading]').innerText = heading;
                     },
 
                 },
