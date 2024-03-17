@@ -144,8 +144,14 @@ export var Factory = (function( EventBus ) {
         }
 
         _public.get.inlineTemplateNode = function() {
+            
+            let node = null; 
 
-            return component.inlineTemplateNode;
+            node = ( component.inlineTemplateNode === null ) ? _public.dispatch.createTemplateNode() : component.inlineTemplateNode;
+            if( node === null ) { 
+                console.error( 'Inline template does not exist' );
+            }
+            return node;
 
         }
 
@@ -376,9 +382,33 @@ export var Factory = (function( EventBus ) {
         }
 
         _public.dispatch.createInlineTemplate = function( template, componentKey ) {
-          
+
             var inlineTemplateNode = Factory.templateToHTML( template ); 
             inlineTemplateNode.setAttribute( 'data-key', componentKey );
+
+            component.inlineTemplateNode = inlineTemplateNode; 
+
+            return _public.get.inlineTemplateNode();
+
+        }
+
+        // Alias for createInlineTemplate()
+        _public.dispatch.createNodeFromTemplate = function( template, componentKey ) {
+
+            return _public.dispatch.createInlineTemplate( template, componentKey );
+
+        }
+
+        _public.dispatch.createTemplateNode = function() {
+
+            var inlineTemplateNode = Factory.templateToHTML( component.template ); 
+
+            try {
+                inlineTemplateNode.setAttribute( 'data-key', _public.get.state( 'key' ) );
+            } catch (error) {
+                console.error('Template does not exist');
+                return false;
+            }
 
             component.inlineTemplateNode = inlineTemplateNode; 
 
