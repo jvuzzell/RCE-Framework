@@ -101,7 +101,7 @@ componentOne.dispatch.SomeAction = (newInput) => {
     // Do something with the newInput ...
 
     // ... Save the input
-    module.commit.state({
+    this.component().commit.state({
         myKey: processedInput
     });
 } 
@@ -110,7 +110,7 @@ componentOne.dispatch.SomeAction = (newInput) => {
  * Step 3 - React to the signal in another component
  */
 
-componentTwo.hooks.onUpdate = ( delta ) => {
+componentTwo.dispatch.update = ( delta ) => {
     console.log( delta.myKey );
 }
 ```
