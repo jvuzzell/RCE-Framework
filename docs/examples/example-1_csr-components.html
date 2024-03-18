@@ -15,13 +15,12 @@
             Factory,
             ComponentConfigs
         ){
-            // State of individual modules
-            var initialState = {
+            let initialState = {
                 componentName : 'exampleComponent', 
                 heading : 'Hello World'
             };
 
-            // Return registered module (object) to developer
+            // Step 1 - Configuration
             ComponentConfigs.exampleComponent = {
 
                 eventBus : [ 'GlobalComponentEvents' ],
@@ -71,6 +70,7 @@
                 `
             }
 
+            // Step 2 - Registration
             Factory.registerComponent( ComponentConfigs.exampleComponent );
 
         })(
