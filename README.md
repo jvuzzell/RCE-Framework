@@ -97,7 +97,7 @@ ComponentConfigs.componentTwo.eventBus = ['MyBus', 'AnotherBus'];
  *       componentOne's previous state and future state
  */
 
-componentOne.dispatch.SomeAction = (newInput) => {
+componentOne.dispatch.SomeAction = function ( newInput ) {
     // Do something with the newInput ...
 
     // ... Save the input
@@ -110,7 +110,7 @@ componentOne.dispatch.SomeAction = (newInput) => {
  * Step 3 - React to the signal in another component
  */
 
-componentTwo.dispatch.update = ( delta ) => {
+componentTwo.dispatch.update = function ( delta ) {
     console.log( delta.myKey );
 }
 ```
