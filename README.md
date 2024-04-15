@@ -110,7 +110,7 @@ componentOne.dispatch.SomeAction = function ( newInput ) {
  * Step 3 - React to the signal in another component
  */
 
-componentTwo.dispatch.update = function ( delta ) {
+componentTwo.dispatch.update = function ( componentKey, delta ) {
     console.log( delta.myKey );
 }
 ```
