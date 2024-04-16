@@ -1,7 +1,5 @@
 # RCE Framework 
 
-RCE (Root Components and Event-bus) emphasizes getting back to the roots of component-based development. RCE's component builder is a lightweight, event-driven JavaScript framework for building highly interactive and modular web applications. By leveraging an event bus system, RCE facilitates communication between components without requiring them to be directly aware of each other, enabling a decoupled and maintainable architecture.
-
 ### Table of Contents
 1. [Documentation](#further-documentation)
 2. [Getting Started](#getting-started)
@@ -9,18 +7,21 @@ RCE (Root Components and Event-bus) emphasizes getting back to the roots of comp
 4. [Registering a Component](#registering-a-component)
 5. [Emitting and Listening to Events](#listening-and-emitting-events)
 
+### Introduction
+RCE (Root Components and Event-bus) emphasizes getting back to the roots of component-based development. RCE's component builder is a lightweight, event-driven JavaScript framework for building highly interactive and modular web applications. By leveraging an event bus system, RCE facilitates communication between components without requiring them to be directly aware of each other, enabling a decoupled and maintainable architecture.
+
 ### Features
-- Event-Driven Architecture: Components communicate through a centralized event bus, promoting loose coupling and enhanced modularity.
-- Component Lifecycle Hooks: Utilize hooks like beforeCreate, onMount, and afterUpdate for fine-grained control over the component lifecycle.
-- State Management: Manage component states with ease, allowing for reactive updates and efficient rendering.
-- Template Rendering: Define and manipulate component templates, supporting both inline and external templates for dynamic content rendering.
-- No compiler or build process: The original framework is written in vanilla JavaScript and is readily extensible at less than 1500 lines of code. 
+- **Event-Driven Architecture**: Components communicate through a centralized event bus, promoting loose coupling and enhanced modularity.
+- **Component Lifecycle Hooks**: Utilize hooks like beforeCreate, onMount, and afterUpdate for fine-grained control over the component lifecycle.
+- **State Management**: Manage component states with ease, allowing for reactive updates and efficient rendering.
+- **Template Rendering**: Define and manipulate component templates, supporting both inline and external templates for dynamic content rendering.
+- **No compiler or build process**: The original framework is written in vanilla JavaScript and is readily extensible at less than 1500 lines of code. 
 
 ### Limitations
-- Developer Experience: Requires proficiency in vanilla JavaScript and relies on a strong understanding of fundamental patterns with a large focus on being intentional.
-- Verbosity: This is not a declarative system; you will be writing a lot of code with explicit system instructions. There isn't a templating language or special utility classes that serve multiple purposes. (Maybe one day we'll make it more class based at best).
-- Process Orientation: An opinionated system focusing on impact, business value, and explicit workflows. Common actions make it easier to estimate production, and generate documentation for component libraries and process diagrams. For example: no build process means minor changes won't cost the organization countless hours of production.
-- Type Handling: Use of JsDocs is highly encouraged.
+- **Developer Experience**: Requires proficiency in vanilla JavaScript and relies on a strong understanding of fundamental patterns with a large focus on being intentional.
+- **Verbosity**: This is not a declarative system; you will be writing a lot of code with explicit system instructions. There isn't a templating language or special utility classes that serve multiple purposes. (Maybe one day we'll make it more class based at best).
+- **Process Orientation**: An opinionated system focusing on impact, business value, and explicit workflows. Common actions make it easier to estimate production, and generate documentation for component libraries and process diagrams. For example: no build process means minor changes won't cost the organization countless hours of production.
+- **Type Handling**: Use of JsDocs is highly encouraged.
 
 ## Getting Started
 ### Installation
