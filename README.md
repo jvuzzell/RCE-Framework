@@ -2,10 +2,11 @@
 
 ### Table of Contents
 1. [Documentation](#further-documentation)
-2. [Getting Started](#getting-started)
-3. [Creating a Component](#creating-a-component)
-4. [Registering a Component](#registering-a-component)
-5. [Emitting and Listening to Events](#listening-and-emitting-events)
+2. [Examples](#examples)
+3. [Getting Started](#getting-started)
+4. [Creating a Component](#creating-a-component)
+5. [Registering a Component](#registering-a-component)
+6. [Emitting and Listening to Events](#listening-and-emitting-events)
 
 ### Introduction
 RCE (Root Components and Event-bus) emphasizes getting back to the roots of component-based development. RCE's component builder is a lightweight, event-driven JavaScript framework for building highly interactive and modular web applications. By leveraging an event bus system, RCE facilitates communication between components without requiring them to be directly aware of each other, enabling a decoupled and maintainable architecture.
