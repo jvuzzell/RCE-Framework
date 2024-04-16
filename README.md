@@ -1,6 +1,13 @@
-# RCE Framework
+# RCE Framework 
 
-RCE (Root Components and Event-bus) emphasizes getting back to the roots of component-based development. RCE's component builder is a lightweight, event-driven JavaScript framework for building highly interactive and modular web applications. By leveraging an event bus system, RCE facilitates communication between components without requiring them to be directly aware of each other, enabling a decoupled and maintainable architecture. 
+RCE (Root Components and Event-bus) emphasizes getting back to the roots of component-based development. RCE's component builder is a lightweight, event-driven JavaScript framework for building highly interactive and modular web applications. By leveraging an event bus system, RCE facilitates communication between components without requiring them to be directly aware of each other, enabling a decoupled and maintainable architecture.
+
+### Table of Contents
+1. [Documentation](#further-documentation)
+2. [Getting Started](#getting-started)
+3. [Creating a Component](#creating-a-component)
+4. [Registering a Component](#registering-a-component)
+5. [Emitting and Listening to Events](#listening-and-emitting-events)
 
 ### Features
 - Event-Driven Architecture: Components communicate through a centralized event bus, promoting loose coupling and enhanced modularity.
@@ -12,7 +19,7 @@ RCE (Root Components and Event-bus) emphasizes getting back to the roots of comp
 ### Limitations
 - Developer Experience: Requires proficiency in vanilla JavaScript and relies on a strong understanding of fundamental patterns with a large focus on being intentional.
 - Verbosity: This is not a declarative system; you will be writing a lot of code with explicit system instructions. There isn't a templating language or special utility classes that serve multiple purposes. (Maybe one day we'll make it more class based at best).
-- Process Orientation: An opinionated system focusing on impact, business value, and explicit workflows. Common actions make it easier to estimate production, and generate documentation for component libraries and process diagrams. For example. no build process means minor changes won't cost the organization countless hours of production.
+- Process Orientation: An opinionated system focusing on impact, business value, and explicit workflows. Common actions make it easier to estimate production, and generate documentation for component libraries and process diagrams. For example: no build process means minor changes won't cost the organization countless hours of production.
 - Type Handling: Use of JsDocs is highly encouraged.
 
 ## Getting Started
@@ -69,13 +76,16 @@ ComponentConfigs.myComponentConfig = {
 ```
 
 ### Registering a Component
-Register your component with the RCE framework to bring it to life.
+Register your component with the RCE framework to bring it to life. 
+
+The RCE Factory module decorates and stores a new Javascript object (not a class) in the `Factory.ComponentStore.` The module can be referenced or retrieved by using the `Factoriy.getComponentByName()` method.
+
 
 ``` javascript
 Factory.registerComponent( Component.myComponentConfig );
 ```
 
-### Listening and Emitting Events
+### Emitting and Listening to Events
 Components can listen to events from the event bus and emit events to communicate with other components.
 
 ``` javascript
@@ -115,12 +125,19 @@ componentTwo.dispatch.update = function ( componentKey, delta ) {
 }
 ```
 
-## Documentation
+## Further Documentation
 For detailed documentation on component configuration, lifecycle hooks, state management, and event handling, refer to the RCE Documentation.
+
+1. [Component Confiuration](docs/assets/20240416_RCE-Framework-Documentation_Component-Configuration.jpeg)
+2. [Component Life Cycle](docs/assets/20240416_RCE-Framework-Documentation_Component-Lifecycle.jpeg)
+3. [Event Bus - Subscription Model](docs/assets/20240416_RCE-Framework-Documentation_Event-Bus_Subscription-Model.jpeg)
+4. [Event Bus - Notifications](docs/assets/20240416_RCE-Framework-Documentation_Event-Bus_Notifications.jpeg)
 
 ## Examples
 Check out the examples directory for sample applications and use cases to get started with RCE.
 
+1. [Server-side Rendering Example](docs/examples/example-2_ssr-components.html)
+2. [Client-side Rendering Example](docs/examples/example-1_csr-components.html)
 
 ---
 License
