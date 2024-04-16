@@ -1,8 +1,8 @@
 {
     "name": "ui-component-eventbus-js",
-    "version": "2.3.0",
+    "version": "2.3.1",
     "description": "Offers state management and event bus for UI components. Use to create single page applications or add reactive components to projects.",
-    "main": "ComponentBuilder.js",
+    "main": "RCE Framework",
     "scripts": {
         "test": "jest",
         "test-watch": "jest --watch"
@@ -18,7 +18,7 @@
         "publisher",
         "subscriber"
     ],
-    "author": "Joshua Uzzell <josh.uzzell@gmail.com> (https://uzzell.cc)",
+    "author": "Joshua Uzzell <josh.uzzell@gmail.com> (https://uzzell.codes)",
     "license": "SEE LICENSE IN license.txt",
     "bugs": {
         "url": "https://github.com/jvuzzell/ui-components-js/issues"
