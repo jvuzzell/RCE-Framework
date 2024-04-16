@@ -130,7 +130,7 @@ componentTwo.dispatch.update = function ( componentKey, delta ) {
 ## Further Documentation
 For detailed documentation on component configuration, lifecycle hooks, state management, and event handling, refer to the RCE Documentation.
 
-1. [Component Confiuration](docs/assets/20240416_RCE-Framework-Documentation_Component-Configuration.jpeg)
+1. [Component Configuration](docs/assets/20240416_RCE-Framework-Documentation_Component-Configuration.jpeg)
 2. [Component Life Cycle](docs/assets/20240416_RCE-Framework-Documentation_Component-Lifecycle.jpeg)
 3. [Event Bus - Subscription Model](docs/assets/20240416_RCE-Framework-Documentation_Event-Bus_Subscription-Model.jpeg)
 4. [Event Bus - Notifications](docs/assets/20240416_RCE-Framework-Documentation_Event-Bus_Notifications.jpeg)
