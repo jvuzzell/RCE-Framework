@@ -130,16 +130,23 @@ componentTwo.dispatch.update = function ( componentKey, delta ) {
 ## Further Documentation
 For detailed documentation on component configuration, lifecycle hooks, state management, and event handling, refer to the RCE Documentation.
 
+### RCE Component & Event Lifecycles
 1. [Component Configuration](docs/assets/20240416_RCE-Framework-Documentation_Component-Configuration.jpeg)
-2. [Component Life Cycle](docs/assets/20240416_RCE-Framework-Documentation_Component-Lifecycle.jpeg)
-3. [Event Bus - Subscription Model](docs/assets/20240416_RCE-Framework-Documentation_Event-Bus_Subscription-Model.jpeg)
-4. [Event Bus - Notifications](docs/assets/20240416_RCE-Framework-Documentation_Event-Bus_Notifications.jpeg)
+1. [Component Life Cycle](docs/assets/20240416_RCE-Framework-Documentation_Component-Lifecycle.jpeg)
+1. [Event Bus - Subscription Model](docs/assets/20240416_RCE-Framework-Documentation_Event-Bus_Subscription-Model.jpeg)
+1. [Event Bus - Notifications](docs/assets/20240416_RCE-Framework-Documentation_Event-Bus_Notifications.jpeg)
+
+### Glossaries - Public Methods
+
+1. [Factory Methods](docs/20240421_public-factory-methods.md)
+1. [Component Methods](docs/20240421_public-component-methods.md)
+1. [Hooks](docs/20240421_hooks.md)
 
 ## Examples
 Check out the examples directory for sample applications and use cases to get started with RCE.
 
 1. [Server-side Rendering Example](docs/examples/example-2_ssr-components.html)
-2. [Client-side Rendering Example](docs/examples/example-1_csr-components.html)
+1. [Client-side Rendering Example](docs/examples/example-1_csr-components.html)
 
 ---
 License
