@@ -132,7 +132,7 @@ For detailed documentation on component configuration, lifecycle hooks, state ma
 
 ### RCE Component & Event Lifecycles
 1. [Component Configuration](docs/assets/20240416_RCE-Framework-Documentation_Component-Configuration.jpeg)
-1. [Component Life Cycle](docs/assets/20240416_RCE-Framework-Documentation_Component-Lifecycle.jpeg)
+1. [Component Life Cycle](docs/assets/20240421_RCE-Framework-Documentation_Component-Lifecycle.jpeg)
 1. [Event Bus - Subscription Model](docs/assets/20240416_RCE-Framework-Documentation_Event-Bus_Subscription-Model.jpeg)
 1. [Event Bus - Notifications](docs/assets/20240416_RCE-Framework-Documentation_Event-Bus_Notifications.jpeg)
 

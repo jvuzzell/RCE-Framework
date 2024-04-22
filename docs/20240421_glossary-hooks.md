@@ -14,4 +14,4 @@ Here are all the lifecycle hooks available to components. These hooks allow deve
 |afterMount|Executes after a component has been mounted to the DOM.|
 
 ## Component Configuration & Lifecycle
-![](../docs/assets/20240416_RCE-Framework-Documentation_Component-Lifecycle.jpeg)
+![](../docs/assets/20240421_RCE-Framework-Documentation_Component-Lifecycle.jpeg)
